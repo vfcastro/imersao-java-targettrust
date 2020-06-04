@@ -1,6 +1,7 @@
 package br.com.tt.petshop.service;
 
 import br.com.tt.petshop.dto.UnidadeDto;
+import br.com.tt.petshop.dto.UnidadeEntradaDto;
 import br.com.tt.petshop.repository.UnidadeRepository;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -34,7 +35,7 @@ class UnidadeServiceComAnotacoesTest {
 
     @Test
     void deveriaCriarComSucesso(){
-        UnidadeDto unidade = new UnidadeDto(100, "ZS", "Rua Mario Totta, 32");
+        UnidadeEntradaDto unidade = new UnidadeEntradaDto("ZS", "Rua Mario Totta, 32");
 
         unidadeService.criarUnidade(unidade);
 

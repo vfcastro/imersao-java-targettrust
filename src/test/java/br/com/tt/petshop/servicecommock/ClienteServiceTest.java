@@ -1,5 +1,6 @@
 package br.com.tt.petshop.servicecommock;
 
+import br.com.tt.petshop.dto.ClienteEntradaDto;
 import br.com.tt.petshop.exception.CpfInvalidoException;
 import br.com.tt.petshop.model.Cliente;
 import br.com.tt.petshop.repository.ClienteRepository;
@@ -31,7 +32,7 @@ class ClienteServiceTest {
     @Test
     void deveriaSalvarComSucesso(){
         //Preparação
-        Cliente clienteASerSalvo = new Cliente("Fulano dos Santos", "911.948.160-88");
+        ClienteEntradaDto clienteASerSalvo = new ClienteEntradaDto("Fulano dos Santos", "911.948.160-88");
         ClienteRepository clientRepositoryMock = new MockGilbertoClienteRepository();
         CpfValidator cpfValidator = new CpfValidator();
 
@@ -47,7 +48,7 @@ class ClienteServiceTest {
     @Test
     void deveriaFalharComCpfInvalido(){
         //Preparação
-        Cliente clienteASerSalvo = new Cliente("Fulano dos Santos", "A11.948.160-88");
+        ClienteEntradaDto clienteASerSalvo = new ClienteEntradaDto("Fulano dos Santos", "A11.948.160-88");
         ClienteRepository clientRepositoryMock = new MockGilbertoClienteRepository();
         CpfValidator cpfValidator = new CpfValidator();
 

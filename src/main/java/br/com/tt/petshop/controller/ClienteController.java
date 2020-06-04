@@ -1,5 +1,6 @@
 package br.com.tt.petshop.controller;
 
+import br.com.tt.petshop.dto.ClienteEntradaDto;
 import br.com.tt.petshop.model.Cliente;
 import br.com.tt.petshop.service.ClienteService;
 import org.springframework.stereotype.Controller;
@@ -40,7 +41,7 @@ public class ClienteController {
     public ModelAndView acaoCadastrar(@RequestParam("nome") String nome,
                                       @RequestParam("cpf") String cpf){
 
-        Cliente novoCliente = new Cliente(nome, cpf);
+        ClienteEntradaDto novoCliente = new ClienteEntradaDto(nome, cpf);
         clienteService.criarCliente(novoCliente);
 
         return new ModelAndView("cliente_cadastro");

@@ -1,5 +1,6 @@
 package br.com.tt.petshop.controller;
 
+import br.com.tt.petshop.dto.UnidadeEntradaDto;
 import br.com.tt.petshop.dto.UnidadeDto;
 import br.com.tt.petshop.service.UnidadeService;
 import org.springframework.stereotype.Controller;
@@ -41,7 +42,7 @@ public class UnidadeController {
     public ModelAndView acaoCadastrar(@RequestParam("nome")     String nome,
                                       @RequestParam("endereco") String endereco){
 
-        UnidadeDto unidadeDto = new UnidadeDto(null, nome, endereco);
+        UnidadeEntradaDto unidadeDto = new UnidadeEntradaDto(nome, endereco);
         unidadeService.criarUnidade(unidadeDto);
         return new ModelAndView("unidade_cadastro");
     }

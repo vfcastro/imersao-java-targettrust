@@ -1,17 +1,12 @@
 package br.com.tt.petshop.model;
 
+import br.com.tt.petshop.dto.ClienteEntradaDto;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "TB_CLIENTE")
 public class Cliente {
-
-    Cliente() {}//Construtor default para o Hibernate funcionar!!
-
-    public Cliente(String nome, String cpf) {
-        this.nome = nome;
-        this.cpf = cpf;
-    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)//Geração automática pelo BD
@@ -26,6 +21,19 @@ public class Cliente {
 
     @Column(name = "nro_cpf", columnDefinition = "VARCHAR(14)", nullable = false)
     private String cpf;
+
+    //Construtor default para o Hibernate funcionar!!
+    Cliente() {
+    }
+
+    public Cliente(ClienteEntradaDto clienteEntrada) {
+        this.atualizarDadosCliente(clienteEntrada);
+    }
+
+    public void atualizarDadosCliente(ClienteEntradaDto dadosCliente) {
+        this.nome = dadosCliente.getNome();
+        this.cpf = dadosCliente.getCpf();
+    }
 
     public String getDescricao(){
         return String.format("%s (%s)",this.nome, this.cpf);
