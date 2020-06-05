@@ -3,6 +3,7 @@ package br.com.tt.petshop.model;
 import br.com.tt.petshop.dto.ClienteEntradaDto;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table(name = "TB_CLIENTE")
@@ -35,11 +36,30 @@ public class Cliente {
         this.cpf = dadosCliente.getCpf();
     }
 
-    public String getDescricao(){
-        return String.format("%s (%s)",this.nome, this.cpf);
+    public Integer getId() {
+        return id;
     }
 
     public String getCpf() {
         return cpf;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Cliente cliente = (Cliente) o;
+        return Objects.equals(id, cliente.id) &&
+                Objects.equals(nome, cliente.nome) &&
+                Objects.equals(cpf, cliente.cpf);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, nome, cpf);
     }
 }

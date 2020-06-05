@@ -23,9 +23,12 @@ public class UnidadeRestController {
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity criar(@RequestBody UnidadeEntradaDto dto){
-        unidadeService.criarUnidade(dto);
-        URI location = URI.create("/unidades/");//TODO trocar para o id gerado no banco
-        return ResponseEntity.created(location).build();
+
+        int idCriado = unidadeService.criarUnidade(dto);
+
+        return ResponseEntity
+                .created(URI.create(String.format("/unidades/%d", idCriado)))
+                .build();
     }
 
     //@RequestMapping(method = RequestMethod.GET, value = "/unidades", produces = "application/json")

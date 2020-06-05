@@ -1,6 +1,7 @@
 package br.com.tt.petshop.service;
 
 import br.com.tt.petshop.dto.ClienteEntradaDto;
+import br.com.tt.petshop.dto.ClienteSaidaDto;
 import br.com.tt.petshop.exception.CpfInvalidoException;
 import br.com.tt.petshop.model.Cliente;
 import br.com.tt.petshop.repository.ClienteRepository;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ClienteService {
@@ -22,20 +24,33 @@ public class ClienteService {
         this.cpfValidator = cpfValidator;
     }
 
-    public List<Cliente> listarClientes(){
-        return this.clienteRepository.listarClientes();
+    public List<ClienteSaidaDto> listarClientes(){
+/*
+        List<Cliente> lista = this.clienteRepository.listarClientes();
+        List<ClienteSaidaDto> listaRetornoMetodo = new ArrayList<>();
+        for (Cliente cliente : lista){
+            ClienteSaidaDto dto = ClienteSaidaDto.build(cliente);
+            listaRetornoMetodo.add(dto);
+        }
+        return listaRetornoMetodo;
+*/
+        //Stream??
+        return this.clienteRepository.listarClientes()
+                .stream()
+                .map(ClienteSaidaDto::converte)
+                .collect(Collectors.toList());
     }
 
     @Transactional//Deixa tudo abaixo de uma transação, ou seja, propricia ROLLBACK!
     //Poderia estar no Repository também, mas é mais comum no Service.
-    public void criarCliente(ClienteEntradaDto clienteEntrada) {
+    public Cliente criarCliente(ClienteEntradaDto clienteEntrada) {
 
         if( ! cpfValidator.verificaSeCpfValido(clienteEntrada.getCpf())){
-            throw new CpfInvalidoException();
+            throw new CpfInvalidoException("O formato do CPF está incorreto!");
         }
 
-        Cliente cliente = new Cliente(clienteEntrada);
-        clienteRepository.criarCliente(cliente);
+        Cliente clienteEntidade = new Cliente(clienteEntrada);
+        return clienteRepository.criarCliente(clienteEntidade);
     }
 
     public Cliente buscarPorId(Integer id) {
