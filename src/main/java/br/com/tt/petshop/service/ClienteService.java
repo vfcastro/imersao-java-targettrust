@@ -3,6 +3,7 @@ package br.com.tt.petshop.service;
 import br.com.tt.petshop.dto.ClienteEntradaDto;
 import br.com.tt.petshop.dto.ClienteSaidaDto;
 import br.com.tt.petshop.exception.CpfInvalidoException;
+import br.com.tt.petshop.exception.ErroNegocioException;
 import br.com.tt.petshop.model.Cliente;
 import br.com.tt.petshop.repository.ClienteRepository;
 import br.com.tt.petshop.util.CpfValidator;
@@ -11,9 +12,12 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 public class ClienteService {
+
+    private static final String SEPARADOR = " ";
 
     private ClienteRepository clienteRepository;
     private CpfValidator cpfValidator;
@@ -45,12 +49,43 @@ public class ClienteService {
     //Poderia estar no Repository também, mas é mais comum no Service.
     public Cliente criarCliente(ClienteEntradaDto clienteEntrada) {
 
-        if( ! cpfValidator.verificaSeCpfValido(clienteEntrada.getCpf())){
+        if(!cpfValidator.verificaSeCpfValido(clienteEntrada.getCpf())){
             throw new CpfInvalidoException("O formato do CPF está incorreto!");
+        }
+
+        if(!verificaSeNomePossuiQuantidadePartes(clienteEntrada.getNome())){
+            throw new ErroNegocioException("nome_invalido", "Informe seu nome completo!");
+        }
+
+        if(!verificaSePartesDoNomePossuemTamanhoMinimo(clienteEntrada.getNome())){
+            throw new ErroNegocioException("nome_invalido", "Informe seu nome sem abreviações!");
         }
 
         Cliente clienteEntidade = new Cliente(clienteEntrada);
         return clienteRepository.criarCliente(clienteEntidade);
+    }
+
+    /*
+     * Cada parte do nome da pessoa deve conter ao menos 2 letras.
+     */
+    private boolean verificaSePartesDoNomePossuemTamanhoMinimo(String nome) {
+//        String[] partes = nome.split(SEPARADOR);
+//        for(String parte : partes){
+//            if(parte.length() < 2){
+//                return false;
+//            }
+//        }
+//        return true;
+
+        return Stream.of(nome.split(SEPARADOR))
+                .allMatch(parte -> parte.length() > 2);
+    }
+
+    /*
+     * O nome da pessoa deve ser composta de pelo menos duas partes.
+     */
+    private boolean verificaSeNomePossuiQuantidadePartes(String nome) {
+        return nome.split(SEPARADOR).length > 2;
     }
 
     public Cliente buscarPorId(Integer id) {

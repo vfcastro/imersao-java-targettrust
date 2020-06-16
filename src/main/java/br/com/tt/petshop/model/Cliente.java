@@ -3,6 +3,7 @@ package br.com.tt.petshop.model;
 import br.com.tt.petshop.dto.ClienteEntradaDto;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -14,6 +15,7 @@ public class Cliente {
     //@GeneratedValue(strategy = GenerationType.TABLE)//Tabela do Hibernate no Banco para controle
     //@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "minhaSeq")//BDs com SEQUENCE a parte
     //@SequenceGenerator(name = "minhaSeq", sequenceName = "MEUDB_RUN.seq_cliente")
+    @Column(name = "ID")
     private Integer id;
 
     @Column(name = "txt_nome")
@@ -22,6 +24,9 @@ public class Cliente {
 
     @Column(name = "nro_cpf", columnDefinition = "VARCHAR(14)", nullable = false)
     private String cpf;
+
+    @OneToMany(mappedBy = "cliente")
+    private List<Animal> animais;
 
     //Construtor default para o Hibernate funcionar!!
     Cliente() {

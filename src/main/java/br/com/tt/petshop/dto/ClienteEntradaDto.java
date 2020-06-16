@@ -11,6 +11,11 @@ public class ClienteEntradaDto {
     }
 
     public String getNome() {
+        return nome.replaceAll("^[a-zA-Z0-9 ]*", " ")
+                .replaceAll("[ ]*", " ");
+    }
+
+    public String getNomeOriginal(){
         return nome;
     }
 
