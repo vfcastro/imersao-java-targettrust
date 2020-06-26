@@ -28,8 +28,8 @@ public class UnidadeDto {
         return String.format("%s - %s", nome, endereco);
     }
 
-    public void atualizarInformacoes(UnidadeDto unidadeDeEntrada) {
-        this.nome = unidadeDeEntrada.nome;
-        this.endereco = unidadeDeEntrada.endereco;
+    public void atualizarInformacoes(UnidadeEntradaDto unidadeDeEntrada) {
+        this.nome = unidadeDeEntrada.getNome();
+        this.endereco = unidadeDeEntrada.getEndereco();
     }
 }

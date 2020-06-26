@@ -32,10 +32,10 @@ public class UnidadeService {
         return unidadeRepository.buscarPorId(idUnidade);
     }
 
-    public void atualizar(Long id, UnidadeDto unidadeDeEntrada) {
-        UnidadeDto unidadeSalva = this.buscarPorId(id);
-        unidadeSalva.atualizarInformacoes(unidadeDeEntrada);
-        unidadeRepository.salvar(unidadeDeEntrada);
+    public void atualizar(Long id, UnidadeEntradaDto unidadeDeEntrada) {
+        UnidadeDto unidade = this.buscarPorId(id);
+        unidade.atualizarInformacoes(unidadeDeEntrada);
+        unidadeRepository.salvar(unidade);
     }
 
     @Transactional

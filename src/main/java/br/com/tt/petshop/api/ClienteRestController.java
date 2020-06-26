@@ -11,6 +11,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 
@@ -26,7 +27,7 @@ public class ClienteRestController {
     }
 
     @PostMapping(value = "/clientes", consumes = APPLICATION_JSON_VALUE)
-    public ResponseEntity criar(@RequestBody ClienteEntradaDto dto){
+    public ResponseEntity criar(@RequestBody @Valid ClienteEntradaDto dto){
         Cliente clienteCriado = clienteService.criarCliente(dto);
         String location = String.format("/clientes/%d", clienteCriado.getId());
 
@@ -48,7 +49,7 @@ public class ClienteRestController {
     //Put /clientes/{id} -> body json (campos do objeto a ser atualizado!)
     @PutMapping("/clientes/{idCliente}")
     public ResponseEntity atualizar(@PathVariable("idCliente") Integer idCliente,
-                                    @RequestBody ClienteEntradaDto clienteEntradaDto){
+                                    @RequestBody @Valid ClienteEntradaDto clienteEntradaDto){
         clienteService.atualizar(idCliente, clienteEntradaDto);
         return ResponseEntity.noContent().build();
     }

@@ -1,6 +1,7 @@
 package br.com.tt.petshop.service;
 
 import br.com.tt.petshop.dto.ClienteEntradaDto;
+import br.com.tt.petshop.dto.ClienteSaidaDto;
 import br.com.tt.petshop.exception.CpfInvalidoException;
 import br.com.tt.petshop.model.Cliente;
 import br.com.tt.petshop.repository.ClienteRepository;
@@ -9,7 +10,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -25,7 +25,7 @@ class ClienteServiceTest {
     void inicializacao(){
         clientRepositoryMock = Mockito.mock(ClienteRepository.class);
         cpfValidatorMock = Mockito.mock(CpfValidator.class);
-        clienteService = new ClienteService(clientRepositoryMock, cpfValidatorMock);
+//        clienteService = new ClienteService(clientRepositoryMock, cpfValidatorMock, creditoClient);
     }
 
     @Test
@@ -36,12 +36,12 @@ class ClienteServiceTest {
         Mockito.when(clientRepositoryMock.listarClientes()).thenReturn(List.of(new Cliente(dto)));
 
         //Act
-        List<Cliente> clientes = clienteService.listarClientes();
+        List<ClienteSaidaDto> clientes = clienteService.listarClientes();
 
         //Verificação
         assertNotNull(clientes);
 
-        Cliente clienteGilberto = clientes.get(0);
+        ClienteSaidaDto clienteGilberto = clientes.get(0);
         assertEquals("911.948.160-88", clienteGilberto.getCpf());
         assertEquals("Gilberto (911.948.160-88)", clienteGilberto.getDescricao());
         Mockito.verify(clientRepositoryMock).listarClientes();

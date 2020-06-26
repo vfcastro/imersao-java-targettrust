@@ -7,6 +7,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 
@@ -22,7 +23,7 @@ public class UnidadeRestController {
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity criar(@RequestBody UnidadeEntradaDto dto){
+    public ResponseEntity criar(@RequestBody @Valid UnidadeEntradaDto dto){
 
         int idCriado = unidadeService.criarUnidade(dto);
 
@@ -44,7 +45,7 @@ public class UnidadeRestController {
 
     @PutMapping("/{id}")
     public ResponseEntity atualizarTodo(@PathVariable("id") Long id,
-                                    @RequestBody UnidadeDto unidadeASerAtualizada){
+                                    @RequestBody @Valid UnidadeEntradaDto unidadeASerAtualizada){
         unidadeService.atualizar(id, unidadeASerAtualizada);
 
         return ResponseEntity.noContent().build();

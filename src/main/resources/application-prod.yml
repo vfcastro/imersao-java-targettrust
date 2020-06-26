@@ -1,0 +1,14 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://ec2-3-216-129-140.compute-1.amazonaws.com:5432/deckj1kse1g1qe
+    username: rkhmrnctclhrhn
+    password: c6d415826901612e495eb4187721918c511332e637ba926d5be7e900365fc6b8
+    maximumPoolSize: 1
+    hikari:
+      connectionTimeout: 5000
+      idleTimeout: 1000
+      maxLifetime: 30000
+      minimumIdle: 0
+      maximumPoolSize: 1
+  jpa:
+    hibernate.ddl-auto: none

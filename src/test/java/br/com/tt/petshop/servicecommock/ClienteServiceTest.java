@@ -1,8 +1,8 @@
 package br.com.tt.petshop.servicecommock;
 
 import br.com.tt.petshop.dto.ClienteEntradaDto;
+import br.com.tt.petshop.dto.ClienteSaidaDto;
 import br.com.tt.petshop.exception.CpfInvalidoException;
-import br.com.tt.petshop.model.Cliente;
 import br.com.tt.petshop.repository.ClienteRepository;
 import br.com.tt.petshop.service.ClienteService;
 import br.com.tt.petshop.util.CpfValidator;
@@ -22,7 +22,7 @@ class ClienteServiceTest {
         CpfValidator cpfValidator = new CpfValidator();
 
         //Act
-        List<Cliente> clientes = new ClienteService(clientRepositoryMock, cpfValidator).listarClientes();
+        List<ClienteSaidaDto> clientes = new ClienteService(clientRepositoryMock, cpfValidator, null).listarClientes();
 
         //Verificação
         assertNotNull(clientes);
@@ -37,7 +37,7 @@ class ClienteServiceTest {
         CpfValidator cpfValidator = new CpfValidator();
 
         //Act
-        new ClienteService(clientRepositoryMock, cpfValidator).criarCliente(clienteASerSalvo);
+        new ClienteService(clientRepositoryMock, cpfValidator, null).criarCliente(clienteASerSalvo);
 
         //Verificação
         assertEquals(1, ((MockGilbertoClienteRepository) clientRepositoryMock)
@@ -54,7 +54,7 @@ class ClienteServiceTest {
 
         //Act
         assertThrows(CpfInvalidoException.class,
-                () -> new ClienteService(clientRepositoryMock, cpfValidator).criarCliente(clienteASerSalvo));
+                () -> new ClienteService(clientRepositoryMock, cpfValidator, null).criarCliente(clienteASerSalvo));
 
         //Verificação
         assertEquals(0, ((MockGilbertoClienteRepository) clientRepositoryMock)
