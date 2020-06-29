@@ -3,6 +3,9 @@ package br.com.tt.petshop.api;
 import br.com.tt.petshop.dto.UnidadeEntradaDto;
 import br.com.tt.petshop.dto.UnidadeDto;
 import br.com.tt.petshop.service.UnidadeService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +16,7 @@ import java.util.List;
 
 @RestController //@Controller + @ResponseBody
 @RequestMapping("/unidades")
+@Api(tags = {"unidade"})
 public class UnidadeRestController {
 
     //final impede que esse atributo seja reinstaciado!
@@ -34,6 +38,7 @@ public class UnidadeRestController {
 
     //@RequestMapping(method = RequestMethod.GET, value = "/unidades", produces = "application/json")
     @GetMapping(produces = "application/json")
+    @ApiOperation(value = "Lista de Unidades", notes = "Todas as unidades")
     public List<UnidadeDto> lista(){
         return unidadeService.listarUnidades();
     }
@@ -54,7 +59,9 @@ public class UnidadeRestController {
     //Remover  - DELETE /unidades/{identificador} -> NoContent (204)
 
     @DeleteMapping("/{id}")
-    public ResponseEntity remover(@PathVariable("id") Long id){
+    public ResponseEntity remover(
+            @ApiParam(name = "id", value = "ID sequencial gerado na criacao")
+            @PathVariable("id") Long id){
         unidadeService.remover(id); //Ação de remover??
         return ResponseEntity.noContent().build();
     }
